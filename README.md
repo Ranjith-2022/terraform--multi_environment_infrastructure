@@ -1,4 +1,34 @@
-# Ranjith’s Assignment -1
+# Terraform Multi-Environment Infrastructure
+
+## Overview
+
+Terraform configuration that deploys 2 VPCs that are simulating staging and production environments. The VPCs will be connected via VPC peering. The EC2 instances deployed into the respective VPCs will allow limited ingress and protocols and ports.
+
+## Architecture
+
+![image](https://github.com/Ranjith-2022/terraform-multi_environment_infrastructure/assets/114111480/9848d577-ea68-4ca5-ab8c-4a7c76eb6e25)
+
+- **VPC Staging**:
+  - 1 private subnet
+  - 1 public subnet
+  - Bastion host (VM1) and NAT gateway deployed in public subnet
+  - VM2 deployed in private subnet
+  - Webserver deployed on VM2
+  
+- **VPC Prod**:
+  - 2 private subnets
+  - No public subnets
+  - VM3 and VM4 deployed in private subnets
+  
+- **Connection**:
+  - VPC Prod and VPC Staging connected via peering connection
+  
+- **Access**:
+  - Admins can connect to the bastion host via SSH using ec2-user
+  - Admins can connect from the bastion host to all 3 VMs in prod and nonprod VPCs via SSH using ec2-user
+  - Admins can send HTTP requests to the Apache webserver running on VM2 in the staging VPC
+
+
 
 This guide will help you deploy Terraform, which includes staging and production network modules along with web servers. Follow these steps to successfully deploy.
 

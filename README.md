@@ -37,7 +37,7 @@ This guide will help you deploy Terraform, which includes staging and production
 1. **Navigate to the Directory**: Change your working directory to the folder:
 
     ```bash
-    cd Assignment/
+    cd terraform-multi_environment_infrastructure/
     ```
 
 2. **Implement the Staging Network Module**: Change the directory using the following command to move into the staging network directory:
@@ -76,8 +76,9 @@ This guide will help you deploy Terraform, which includes staging and production
     ```bash
     ssh-keygen –t rsa project-staging 
     ```
+    (or) 
 
-    (or) change the file name in the `webserver/main.tf` file "aws_key_pair" and create a keypair using the above command.
+    change the file name in the `webserver/main.tf` file "aws_key_pair" and create a keypair using the above command.
 
 4. **Deploy the Webserver**: Deploy the Webserver using the following commands:
 
@@ -151,9 +152,12 @@ This guide will help you deploy Terraform, which includes staging and production
 
     Create an RSA keypair file using the following command:
 
-    ```bash
-    ssh-keygen –t rsa <keypair_file> 
+     ```bash
+    ssh-keygen –t rsa project-prod
     ```
+    (or) 
+
+    change the file name in the `webserver/main.tf` file "aws_key_pair" and create a keypair using the above command.
 
     Replace the keypair name in the `main.tf` file and deploy using the following commands:
 

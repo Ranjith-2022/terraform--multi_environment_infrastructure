@@ -52,7 +52,7 @@ resource "aws_instance" "my_amazon" {
   subnet_id                   = data.terraform_remote_state.network.outputs.private_subnet_ids[0]
   security_groups             = [aws_security_group.web_sg.id]
   associate_public_ip_address = false
-  user_data = templatefile("${path.module}/install_httpd.sh.tpl",
+  user_data = templatefile("${path.module}/install_httpd.sh",
     {
       env    = upper(var.env),
       prefix = upper(local.prefix)

@@ -1,129 +1,143 @@
 # Ranjith’s Assignment -1
 
-This guide will help you deploy terraform, which includes staging and production network modules along with web servers. Follow these steps to successfully deploy.
+This guide will help you deploy Terraform, which includes staging and production network modules along with web servers. Follow these steps to successfully deploy.
 
-## Staging Network Module
+## Step 1: Staging Network Module
 
-1. Navigate to the Directory
+1. **Navigate to the Directory**: Change your working directory to the folder:
 
-Change your working directory to the folder:
+    ```bash
+    cd Assignment/
+    ```
 
-       cd Assignment/
+2. **Implement the Staging Network Module**: Change the directory using the following command to move into the staging network directory:
 
-2. Implement the Staging Network Module
-
-    Change the directory using below command to move into staging network directory
-
+    ```bash
     cd terraform/Project/Staging/network/
+    ```
 
-3. Create an S3 Bucket
+3. **Create an S3 Bucket**: Create an S3 bucket and replace its name with the existing name in the `network/config.tf` file:
 
-Create an S3 bucket and replace its name with the existing name in the network/config.tf file.
-
+    ```
     terraform-project-12
+    ```
 
-4. Deploy the Configuration
+4. **Deploy the Configuration**: Deploy the configuration using the following commands:
 
-    Deploy the configuration using the following commands:
-
+    ```bash
     terraform init
     terraform validate
     terraform plan
     terraform apply -auto-approve
-    
-Webserver Deployment    
-    
-5. Once the configuration is deployed successfully, change the directory to move into the webserver directory
+    ```
 
+## Step 2: Webserver Deployment
+
+1. **Change to Webserver Directory**: Once the configuration is deployed successfully, change the directory to move into the webserver directory:
+
+    ```bash
     cd ../webserver/
-    
-6. Configure the Webserver 
+    ```
 
-Change the ip address in variable.tf file for "my_private_ip" and "my_public_ip"
+2. **Configure the Webserver**: Change the IP address in the `variable.tf` file for "my_private_ip" and "my_public_ip". The private IP should be replaced with the cloud9 instance private IP address and the public IP should be replaced with the cloud9 instance public IP address.
 
-my_private ip should be replaced with cloud9 instance private ip address and my_public_ip should be replaced with cloud9 instance public ip address
-    
-7. Create an RSA Keypair
-    Create an RSA keypair file and change the key pair name in the webserver/main.tf file for "aws_key_pair."
+3. **Create an RSA Keypair**: Create an RSA keypair file and change the key pair name in the `webserver/main.tf` file for "aws_key_pair".
 
+    ```bash
     ssh-keygen –t rsa project-staging 
-    
-    (or)
-    
-    change the file name in webserver/main.tf file "aws_key_pair" and create a keypair using above command
-    
-8. Deploy the Webserver
-Deploy the Webserver using below commands
+    ```
 
+    (or) change the file name in the `webserver/main.tf` file "aws_key_pair" and create a keypair using the above command.
+
+4. **Deploy the Webserver**: Deploy the Webserver using the following commands:
+
+    ```bash
     terraform init
     terraform validate
     terraform plan
     terraform apply -auto-approve
-    
-9. Bastion Host Connection 
-Once the webserver is successfully deployed, bastion host can be connected using below command
+    ```
 
-   ssh -i <keypair_name> ec2-user@<bastion public ip>
+## Step 3: Bastion Host Connection
 
-If you encounter an "Unprotected file" error, run the following command to change its unprotected state:
+1. **Connect to Bastion Host**: Once the webserver is successfully deployed, the bastion host can be connected using the following command:
 
+    ```bash
+    ssh -i <keypair_name> ec2-user@<bastion_public_ip>
+    ```
+
+    If you encounter an "Unprotected file" error, run the following command to change its unprotected state:
+
+    ```bash
     chmod 400 <keypair_name>
+    ```
 
-After this bastion host connection will be established successfully 
+    After this, the bastion host connection will be established successfully.
 
-10. Connect VM2 through bastion host
+## Step 4: Connect VM2 through bastion host
 
-Create a keypair name using the below command in bastion host
-       ssh-keygen –t rsa <keypair_file>  
-Connect VM2 instance from bastion host using below command
+1. **Create Key Pair on Bastion Host**: Create a keypair name using the following command on the bastion host:
 
-        ssh -i <keypair_name> ec2-user@<VM2 Private ip>
-        
-Once the connection successfully established , try connecting using Http
-    Curl <VM2_Private_IP>
+    ```bash
+    ssh-keygen –t rsa <keypair_file>
+    ```
 
-It will show the output ""welcome......
+2. **Connect VM2 from Bastion Host**: Connect VM2 instance from the bastion host using the following command:
 
-Use "exit" command to exit host
+    ```bash
+    ssh -i <keypair_name> ec2-user@<VM2_Private_ip>
+    ```
 
-11. Production Network and Webserver
- Deploy the Production Network
+    Once the connection is successfully established, try connecting using HTTP:
 
-    Change the directory to move into Production/network using below command
+    ```bash
+    curl <VM2_Private_IP>
+    ```
+
+    It will show the output "welcome......". Use the "exit" command to exit the host.
+
+## Step 5: Production Network and Webserver
+
+1. **Deploy the Production Network**: Change the directory to move into the Production/network using the following command:
+
+    ```bash
     cd ../../Production/network/
+    ```
 
-   Create a s3 bucket and replace the name with the existing name in network/config.tf file
-    
-    Deploy using below commands
-    
+    Create an S3 bucket and replace the name with the existing name in the `network/config.tf` file. Deploy using the following commands:
+
+    ```bash
     terraform init
     terraform validate
     terraform plan
     terraform apply -auto-approve
+    ```
 
-12. Deploy the Production Webserver
+2. **Deploy the Production Webserver**: Once successfully deployed, move to the webserver folder using the following command:
 
-Once successfully deployed, move to the webserver folder using:
+    ```bash
+    cd ../webserver
+    ```
 
-     cd ../webserver
-    
-Create a RSA keypair file using below command     
+    Create an RSA keypair file using the following command:
 
+    ```bash
     ssh-keygen –t rsa <keypair_file> 
-    
-Replace the keypair name in main.tf file and Deploy using below commands
-    
+    ```
+
+    Replace the keypair name in the `main.tf` file and deploy using the following commands:
+
+    ```bash
     terraform init
     terraform validate
     terraform plan
     terraform apply -auto-approve
-    
+    ```
+
 After successfully deploying all the code, you can confirm the status of your infrastructure deployment in the AWS Management Console. Additionally, you can ensure the successful VPC peering connection by following these steps:
 
-Access the AWS Management Console.
-
-In the navigation pane, go to "VPC" and select "Peering Connections" from the menu on the left.
-
-Here, you can verify that the two VPCs created for staging and production environments are now successfully interconnected through VPC peering. This connection enables seamless communication between your environments, allowing them to work together as intended.
+- Access the AWS Management Console.
+- In the navigation pane, go to "VPC" and select "Peering Connections" from the menu on the left.
+- Here, you can verify that the two VPCs created for staging and production environments are now successfully interconnected through VPC peering. This connection enables seamless communication between your environments, allowing them to work together as intended.
 
 This provides a more structured and step-by-step approach for users to confirm their deployment and verify the VPC peering connection in the AWS portal.

@@ -1,11 +1,12 @@
-—————————————- Ranjith’s Assignment -1——————————————
+# Ranjith’s Assignment -1
 
-This guide will help you deploy Assignment-1 , which includes staging and production network modules along with web servers. Follow these steps to successfully deploy the assignment.
+This guide will help you deploy terraform, which includes staging and production network modules along with web servers. Follow these steps to successfully deploy.
 
-Staging Network Module
+## Staging Network Module
 
-1. Navigate to the Assignment Directory
-Change your working directory to the Assignment folder:
+1. Navigate to the Directory
+
+Change your working directory to the folder:
 
        cd Assignment/
 
@@ -126,17 +127,3 @@ In the navigation pane, go to "VPC" and select "Peering Connections" from the me
 Here, you can verify that the two VPCs created for staging and production environments are now successfully interconnected through VPC peering. This connection enables seamless communication between your environments, allowing them to work together as intended.
 
 This provides a more structured and step-by-step approach for users to confirm their deployment and verify the VPC peering connection in the AWS portal.
-    
-    
-
-
-    
-      
-
-   
-   
-
-
-
-
-
